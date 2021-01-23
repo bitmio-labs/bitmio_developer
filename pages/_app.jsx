@@ -1,6 +1,7 @@
 import { DokzProvider, GithubLink, ColorModeSwitch } from 'dokz'
 import React, { Fragment } from 'react'
 import Head from 'next/head'
+import Link from 'next/link'
 import { ChakraProvider } from '@chakra-ui/react'
 
 export default function App(props) {
@@ -15,10 +16,15 @@ export default function App(props) {
                 />
             </Head>
             <DokzProvider
+                headerLogo={
+                    <Link href="/">
+                        <a>Bitmio Docs</a>
+                    </Link>
+                }
                 headerItems={[
                     <GithubLink
                         key='0'
-                        url='https://github.com/remorses/dokz'
+                        url='https://github.com/bitmio-labs/bitmio_developer'
                     />,
                     <ColorModeSwitch key='1' />,
                 ]}
