@@ -1,0 +1,118 @@
+---
+name: Creating Actions
+---
+
+# Creating Actions
+
+Your App's Actions will be available via a REST API, the Bitmio SDKs and the CLI.
+
+You define the Action input types a handler webhook and optionally the response type.
+
+## Creating an Action
+
+We create a simple action that is supposed to respond with a list of Trello cards based on a search input.
+
+``` bash
+bitmio projects myapp actions create search_trello
+```
+
+This immediately gives you instructions on how to invoke the new Action.
+
+It hasn't been configured yet so invoking it will only return an error.
+
+## Configure the Action handler
+
+To handle an Action you have to supply a webhook URL to which your App delegates all requests.
+
+``` bash
+bitmio projects myapp actions search_trello set-webhook YOUR_WEBHOOK_URL
+```
+
+If you invoke your Action now it will forward the webhook response.
+
+## Testing an Action
+
+We test our Action by passing it a `search` property which our webhook hopefully handles correctly:
+
+``` bash
+bitmio projects myapp actions search_trello run --search "My Card"
+```
+
+Note that this is not the way our App user will invoke the Action - more on that later but it will look a lot simpler:
+
+``` bash
+bitmio myapp search_trello --search "My Card"
+```
+
+## Defining the Action Input
+
+We can pass arbitrary properties to our Action - typing the input is optional.
+
+By defining our input types we can automatically generate API docs and validate input.
+
+``` bash
+bitmio projects myapp actions search_trello set-input \
+  --field search --type string --name "Search" \
+  --field max_age --type int? --name "Maximum Age"
+```
+
+This defines two input properties:
+
+- A field with ID `search` of type `string` with a human readable name of "Search".
+- A field with ID `max_age` as an optional `int?` with a name of "Maximum Age"
+
+### Updating Input Field Types
+
+If we wanted change the name of an existing field:
+
+``` bash
+bitmio projects myapp actions search_trello set-input \
+  --field max_age --name "Max. Age"
+```
+
+### Deleting Input Fields
+
+If we wanted to delete existing fields:
+
+``` bash
+bitmio projects myapp actions search_trello set-input \
+  --field max_age --delete
+```
+
+## Defining the Action Output
+
+Analog to the input we can type the Action output.
+
+Let's add some type definitions for our `search_trello` action.
+
+``` bash
+bitmio projects myapp actions search_trello set-output \
+  --field items --type [] --name "Trello Search Results"
+```
+
+This tells our Action to expect a list of items in property `items`.
+
+### Creating Custom Types
+
+We want to specify this further and describe the type of items returned.
+
+For this we need to create a custom Type first:
+
+``` bash
+bitmio projects myapp types create trello_card \
+  --name "Trello Card"
+  --field title --type string --name "Title"
+  --field description --type long_text --name "Description"
+  --field due_date --type date? --name "Due Date"
+```
+
+Which tells Bitmio about our custom Trello Card type with ID `trello_card`.
+
+We can now update our Action output type:
+
+``` bash
+bitmio projects myapp actions search_trello set-output \
+  --field items --type [trello_card]
+```
+
+Bitmio will now warn us whenever the returned output does not match the type definition.

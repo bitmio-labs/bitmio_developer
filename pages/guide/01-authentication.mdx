@@ -1,0 +1,55 @@
+---
+name: Authentication
+---
+
+import { Playground } from 'dokz'
+
+# Bitmio CLI Authentication
+
+If you are new to Bitmio you have to create an account first.
+
+## Create an Account
+
+``` bash
+bitmio signup
+```
+
+Existing accounts can authenticate via the browser or programmatically via API keys.
+
+## Authenticate via browser
+
+``` bash
+bitmio login
+```
+
+Open the returned URL and follow the sign in instructions.
+
+## Authenticate via API key
+
+Add `BITMIO_API_KEY` to your environment variables to authenticate.
+
+Or authenticate via the CLI:
+
+``` bash
+bitmio auth YOUR_API_KEY
+```
+
+To create a new API key:
+
+``` bash
+bitmio api-keys create
+```
+
+You can also list existing API keys:
+
+``` bash
+bitmio api-keys list
+```
+
+And revoke them:
+
+``` bash
+bitmio api-keys revoke YOUR_API_KEY
+```
+
+Next we will create our first app and invite team members.

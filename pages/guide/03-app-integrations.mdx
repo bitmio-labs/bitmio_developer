@@ -1,0 +1,37 @@
+---
+name: Integrating Third-Party Apps
+---
+
+# Integrating Third-Party Apps
+
+Integrating third-party apps allows you to pass readily authenticated apps to your Action handlers.
+
+Third-party apps can be connected either globally as an admin or individually per user.
+
+We get started with admin app integrations and will look at user-connected apps in a later chapter.
+
+## Adding an Integration as Admin
+
+Let's connect Trello to our previously created app.
+
+``` bash
+bitmio projects myapp integrations create trello
+```
+
+Follow the auth instructions in the returned URL to complete the setup.
+
+## List integrated Apps
+
+You can view the status of integrated apps.
+
+``` bash
+bitmio projects myapp integrations
+```
+
+## Explore supported App Integrations
+
+For a list of all supported App Integrations:
+
+``` bash
+bitmio apps
+```

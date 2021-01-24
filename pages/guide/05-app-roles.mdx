@@ -1,0 +1,43 @@
+---
+name: Creating App User Roles
+---
+
+# Creating App User Roles
+
+You can skip this chapter if your app doesn't need to support advanced roles.
+
+By default every app defines an `owner` and `user` role.
+Owners have access to app usage metrics, billing and advanced user management.
+Users are only able to run Actions and invite other users.
+We can configure these permissions and even define entirely new roles.
+
+## Creating custom Roles
+
+Let's create a custom support role that we want to grant limited access to Actions later:
+
+``` bash
+bitmio projects myapp roles create support --name "Support"
+```
+
+## Updating a User's Roles
+To change an existing user's role:
+
+``` bash
+bitmio projects myapp users USER_ID set-role support
+```
+
+## Limit Action access to Roles
+
+By default our new role has no access to any Actions.
+
+Let's grant them access to our previously defined Trello Search action.
+
+``` bash
+bitmio projects myapp actions search_trello add-role support
+```
+
+We can view all roles permitted to run an action in the action details:
+
+``` bash
+bitmio projects myapp actions search_trello
+```

@@ -1,0 +1,67 @@
+---
+name: Inviting App Users
+---
+
+# Inviting App Users
+
+Having defined our first Action we can go ahead and invite some users to our app.
+
+## Creating App Signup Links
+
+To enable signup we simply need to create our signup link:
+
+``` bash
+bitmio projects myapp signup-links create
+```
+
+By default new signups join are assigned the User role - we can override this for our link:
+
+``` bash
+bitmio projects myapp signup-links create --role admin
+```
+
+### List Signup Links
+
+We can always list our existing signup links:
+
+``` bash
+bitmio projects myapp signup-links list
+```
+
+### Disable Signup Links
+
+To disable existing links:
+
+``` bash
+bitmio projects myapp signup-links delete YOUR_SIGNUP_LINK
+```
+
+## Creating one-time invites
+
+We can also create one-time invites that only allow a single signup:
+
+``` bash
+bitmio projects myapp invite-links create
+```
+
+We can optionally pass a name and/or email the link will get sent to:
+
+``` bash
+bitmio projects myapp invite-links create --name "Ann" --email "ann@example.com"
+```
+
+Again we can override the default User role in the invite:
+
+``` bash
+bitmio projects myapp invite-links create --name "Ann" --email "ann@example.com" --role admin
+```
+
+## Existing User Authentication
+
+Existing users of your app can authenticate via the CLI:
+
+``` bash
+bitmio myapp login
+```
+
+And follow the login instructions in the returned URL.
