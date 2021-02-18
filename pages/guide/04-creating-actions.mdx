@@ -61,6 +61,37 @@ This defines two input properties:
 - A field with ID `search` of type `string` with a human readable name of "Search".
 - A field with ID `max_age` as an optional `int?` with a name of "Maximum Age"
 
+## Passing App Integrations as input
+
+To relieve our action handler from having to store the Trello authentication, we can pass the previously created Trello auth:
+
+``` bash
+bitmio projects myapp actions search_trello set-input \
+  --field trello --type trello_auth --value integrations.trello
+```
+
+Or to pass in our second Trello integration previously connected:
+
+``` bash
+bitmio projects myapp actions search_trello set-input \
+  --field trello --type trello_auth --value integrations.my_other_trello
+```
+
+The correct identifiers for the integrations can be retrieved with:
+
+``` bash
+bitmio projects myapp integrations
+```
+
+The action handler webhook will receive the access tokens of the passed app integrations along with the other fields.
+
+We omitting the `--value` option we can ask the app user to provider their own Trello connection:
+
+``` bash
+bitmio projects myapp actions search_trello set-input \
+  --field trello --type trello_auth
+```
+
 ### Updating Input Field Types
 
 If we wanted change the name of an existing field:
